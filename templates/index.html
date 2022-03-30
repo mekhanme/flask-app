@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}  {% block content %}
+<h1>{% block title %} About this site {% endblock %}</h1>
+{% set active_page = "site" %}
+{% include 'sidebar.html' %}
+{% endblock %}
 
-<link type="text/css" rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
-
-<head>
-    <meta charset="UTF-8">
-    <title>Flask-app</title>
-</head>
-
-<body>
-    <h1> About page </h1>
-    <p> Hello... </p>
-</body>
-
-
-</html>
