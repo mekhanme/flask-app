@@ -1,5 +1,3 @@
 {% extends 'base.html' %} {% block content %}
 <h1>{% block title %} About me {% endblock %}</h1>
-{% set active_page = "me" %}
-{% include 'sidebar.html' %}
-{% endblock %}
+{% set active_page = "me" %} {% include 'sidebar.html' %} {{ content | safe }} {% endblock %}

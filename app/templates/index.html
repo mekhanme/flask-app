@@ -1,0 +1,3 @@
+{% extends 'base.html' %} {% block content %}
+<h1>{% block title %} About this site {% endblock %}</h1>
+{% set active_page = "site" %} {{ content | safe }} {% include 'sidebar.html' %} {% endblock %}

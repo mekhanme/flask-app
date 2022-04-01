@@ -23,6 +23,45 @@ h1 {
     color: #e4d9fa
 }
 
+h2 {
+    font-family: tt-rationalist;
+    font-size: 50px;
+    text-align: left;
+    padding-left: 250px;
+    background-color: #251f33;
+    color: #e4d9fa
+}
+
+h3 {
+    font-family: tt-rationalist;
+    font-size: 30px;
+    text-align: left;
+    padding-left: 250px;
+    background-color: #251f33;
+    text-decoration: underline;
+    text-decoration-color: rgb(255, 90, 255);
+    color: #e4d9fa
+}
+
+h4 {
+    font-family: tt-rationalist;
+    font-size: 23px;
+    text-align: left;
+    padding-left: 250px;
+    background-color: #251f33;
+    color: #e4d9fa
+}
+
+h4-c {
+    font-family: tt-rationalist;
+    font-size: 23px;
+    text-align: left;
+    background-color: #251f33;
+    text-decoration: underline;
+    text-decoration-color: rgb(255, 90, 255);
+    color: #e4d9fa
+}
+
 div {
     font-family: tt-rationalist;
     font-size: 20px;
@@ -49,10 +88,32 @@ p {
     color: #e4d9fa
 }
 
-p.underline {
+p-c {
+    font-family: tt-rationalist;
+    font-weight: 100;
+    font-size: 20px;
+    font-stretch: 1%;
+    font-optical-sizing: auto;
+    color: #e4d9fa
+}
+
+a {
+    color: rgb(255, 90, 255);
+}
+
+a-p {
+    padding-left: 250px;
+    color: rgb(255, 90, 255)
+}
+
+a-с {
+    color: rgb(255, 90, 255)
+}
+
+p-u.underline {
     font-family: tt-rationalist;
     text-decoration: underline;
-    text-decoration-color: rgb(255, 90, 255);
+    text-decoration-color: rgb(255, 90, 255)
 }
 
 p.narrow {
@@ -121,4 +182,29 @@ a.button-active {
 a.button:hover {
     text-decoration: none;
     text-shadow: 0 0 10px #9c3da1, 0 0 20px #9c3da1, 0 0 30px #9c3da1, 0 0 40px #9c3da1
+}
+
+.twoColumn {
+    width: 49%;
+    float: left
+}
+
+img {
+    max-width: 80%;
+    padding-left: 300px;
+}
+
+.bottom {
+    /* position: fixed; */
+    bottom: 20;
+    margin-right: 5px;
+    position: relative;
+    float: right;
+}
+
+.bottomright {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    font-size: 18px;
 }
