@@ -8,6 +8,7 @@ on:
 jobs:
   docker_build_push:
     runs-on: ubuntu-latest
+    needs: test
     # env:
     #   REGISTRY_LOGIN: ${{ secrets.REGISTRY_LOGIN }}
     #   REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
@@ -28,7 +29,6 @@ jobs:
         #    --password ${REGISTRY_PASSWORD} \
         #    cr.yandex
       - name: Build and push
-        working-directory: ./app
         uses: docker/build-push-action@v2
         with:
           context: ./app
