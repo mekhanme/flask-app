@@ -88,7 +88,9 @@ jobs:
           context: ./app
           file: ./Dockerfile
           push: ${{ github.ref == 'refs/heads/master' }}
-          tags: cr.yandex/crpgf4au6prfo3nhoduj/app/${GITHUB_REPOSITORY#*/}:latest
+          tags: cr.yandex/crpgf4au6prfo3nhoduj/app/${APP}:latest
+        env:
+          APP: ${GITHUB_REPOSITORY#*/}
   deploy:
     runs-on: ubuntu-latest
     needs: build_push
@@ -98,18 +100,19 @@ jobs:
         with:
           exec: |
             helm upgrade --install ${GITHUB_REPOSITORY#*/} ./deploy --values values.yaml \
-              --set env.CONTENTFUL_ACEESS_TOKEN='E9Z4iHXLjkGgbT-2LzBHzyezd_ZQHlpo_skif_AO-U0' \
-              --set env.CONTENTFUL_SPACE_ID='0jpfngygwvzp' \
-              --set env.CONTENTFUL_ABOUT_ENTRY_ID='531Y8mG06XaBpzCcL0EyM' \
-              --set env.CONTENTFUL_TOOLS_ENTRY_ID='1mBFglWDb1xbA1XucEqrDp' \
-              --set env.CONTENTFUL_SITE_ENTRY_ID='3oSdR6c6azbdr4u3RhmUO'
+              --set env.CONTENTFUL_ACEESS_TOKEN=${CONTENTFUL_ACEESS_TOKEN} \
+              --set env.CONTENTFUL_SPACE_ID=${CONTENTFUL_SPACE_ID} \
+              --set env.CONTENTFUL_ABOUT_ENTRY_ID=${CONTENTFUL_ABOUT_ENTRY_ID} \
+              --set env.CONTENTFUL_TOOLS_ENTRY_ID=${CONTENTFUL_TOOLS_ENTRY_ID} \
+              --set env.CONTENTFUL_SITE_ENTRY_ID=${CONTENTFUL_SITE_ENTRY_ID}
           kubeconfig: ${{ secrets.KUBECONFIG }}
         env:
-          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_ACEESS_TOKEN: ${{ secrets.CONTENTFUL_ACEESS_TOKEN }}
+          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_ABOUT_ENTRY_ID: ${{ secrets.CONTENTFUL_ABOUT_ENTRY_ID }}
           CONTENTFUL_TOOLS_ENTRY_ID: ${{ secrets.CONTENTFUL_TOOLS_ENTRY_ID }}
           CONTENTFUL_SITE_ENTRY_ID: ${{ secrets.CONTENTFUL_SITE_ENTRY_ID }}
+          APP: ${GITHUB_REPOSITORY#*/}
         # - name: Deploy to cluster
         #   uses: wahyd4/kubectl-helm-action@master
         #   env:
