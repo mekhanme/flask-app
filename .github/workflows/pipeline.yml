@@ -49,11 +49,12 @@ jobs:
         working-directory: deploy
         run: sudo rm -rf Chart.yaml
       - name: Create new Chart.yaml
-        working-directory: charts/ansible-runner
+        working-directory: deploy
         run: |
           cat <<EOF > Chart.yaml
           name: ${GITHUB_REPOSITORY#*/}
           apiVersion: v2
+          type: application
           version: ${{ steps.version-bump.outputs.newTag }}
           appVersion: ${{ steps.package-version.outputs.current-version }}
           EOF
