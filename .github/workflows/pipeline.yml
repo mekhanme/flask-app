@@ -1,34 +1,37 @@
 name: CI
 on:
   push:
-    tags:
-      - '!refs/tags/*'
+    # tags:
+    #   - '!refs/tags/*'
     branches:
-      - '*'
+      - master
 jobs:
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Set up Python 3.8
-  #     uses: actions/setup-python@v2
-  #     with:
-  #       python-version: 3.8
-  #   - name: Install dependencies
-  #     working-directory: ./app
-  #     run: |
-  #       python -m pip install --upgrade pip
-  #       pip install flake8 pytest
-  #       pip install -r requirements.txt; 
-  #   - name: Lint with flake8
-  #     working-directory: ./app
-  #     run: |
-  #       # stop the build if there are Python syntax errors or undefined names
-  #       flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-  #       # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-  #       flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-  release:
+  test:
     runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      working-directory: ./app
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install -r requirements.txt; 
+    - name: Lint with flake8
+      working-directory: ./app
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Helm Lint
+      uses: WyriHaximus/github-action-helm3@v2
+      with:
+        exec: helm lint ./deploy
+  bump_version:
+    runs-on: ubuntu-latest
+    needs: test
     steps:
       - uses: actions/checkout@v2
       - name: Version Bump
@@ -36,9 +39,8 @@ jobs:
         uses: phips28/gh-action-bump-version@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # PACKAGEJSON_DIR: charts
         with:
-          # skip-tag:  'true'
+          # skip-tag:  true
           commit-message: Bump version to {{ version }}
       - name: Get app version
         id: package-version
@@ -66,24 +68,52 @@ jobs:
         uses: helm/chart-releaser-action@v1.4.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-  # docker_build_push:
-  #   runs-on: ubuntu-latest
-  #   # needs: test
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Set up Docker Buildx
-  #       id: buildx
-  #       uses: docker/setup-buildx-action@v1
-  #     - name: Login to container registry
-  #       uses: docker/login-action@v1
-  #       with:
-  #         registry: cr.yandex
-  #         username: ${{ secrets.REGISTRY_LOGIN }}
-  #         password: ${{ secrets.REGISTRY_PASSWORD }}
-  #     - name: Build and push
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         context: ./app
-  #         file: ./Dockerfile
-  #         push: ${{ github.ref == 'refs/heads/master' }}
-  #         tags: cr.yandex/crpgf4au6prfo3nhoduj/app/flask-app:latest
+  build_push:
+    runs-on: ubuntu-latest
+    needs: bump_version
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: cr.yandex
+          username: ${{ secrets.REGISTRY_LOGIN }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./app
+          file: ./Dockerfile
+          push: ${{ github.ref == 'refs/heads/master' }}
+          tags: cr.yandex/crpgf4au6prfo3nhoduj/app/${GITHUB_REPOSITORY#*/}:latest
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build_push
+    steps:
+      - name: Helm deploy
+        uses: WyriHaximus/github-action-helm3@v2
+        working-directory: deploy
+        with:
+          exec: |
+            helm upgrade --install ${GITHUB_REPOSITORY#*/} ./ --values values.yaml \
+              --set env.CONTENTFUL_ACEESS_TOKEN='E9Z4iHXLjkGgbT-2LzBHzyezd_ZQHlpo_skif_AO-U0' \
+              --set env.CONTENTFUL_SPACE_ID='0jpfngygwvzp' \
+              --set env.CONTENTFUL_ABOUT_ENTRY_ID='531Y8mG06XaBpzCcL0EyM' \
+              --set env.CONTENTFUL_TOOLS_ENTRY_ID='1mBFglWDb1xbA1XucEqrDp' \
+              --set env.CONTENTFUL_SITE_ENTRY_ID='3oSdR6c6azbdr4u3RhmUO'
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+        env:
+          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+          CONTENTFUL_ACEESS_TOKEN: ${{ secrets.CONTENTFUL_ACEESS_TOKEN }}
+          CONTENTFUL_ABOUT_ENTRY_ID: ${{ secrets.CONTENTFUL_ABOUT_ENTRY_ID }}
+          CONTENTFUL_TOOLS_ENTRY_ID: ${{ secrets.CONTENTFUL_TOOLS_ENTRY_ID }}
+          CONTENTFUL_SITE_ENTRY_ID: ${{ secrets.CONTENTFUL_SITE_ENTRY_ID }}
+        # - name: Deploy to cluster
+        #   uses: wahyd4/kubectl-helm-action@master
+        #   env:
+        #     KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG }}
+        #   with:
+        #     args: kubectl apply -f manifest.yaml

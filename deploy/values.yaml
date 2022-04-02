@@ -59,15 +59,6 @@ env:
   CONTENTFUL_ABOUT_ENTRY_ID: ""
   CONTENTFUL_TOOLS_ENTRY_ID: ""
   CONTENTFUL_SITE_ENTRY_ID: ""
-  APP_VERSION: ""
-
-# export CONTENTFUL_SPACE_ID='0jpfngygwvzp'
-# export CONTENTFUL_ACEESS_TOKEN='E9Z4iHXLjkGgbT-2LzBHzyezd_ZQHlpo_skif_AO-U0'
-# export CONTENTFUL_ABOUT_ENTRY_ID='531Y8mG06XaBpzCcL0EyM'
-# export CONTENTFUL_TOOLS_ENTRY_ID='1mBFglWDb1xbA1XucEqrDp'
-# export CONTENTFUL_SITE_ENTRY_ID='3oSdR6c6azbdr4u3RhmUO'
-
-# helm install flask-app-chart ./ --values values.yaml --set env.CONTENTFUL_SPACE_ID='0jpfngygwvzp' --set env.CONTENTFUL_ACEESS_TOKEN='E9Z4iHXLjkGgbT-2LzBHzyezd_ZQHlpo_skif_AO-U0' --set env.CONTENTFUL_ABOUT_ENTRY_ID='531Y8mG06XaBpzCcL0EyM' --set env.CONTENTFUL_TOOLS_ENTRY_ID='1mBFglWDb1xbA1XucEqrDp' --set env.CONTENTFUL_SITE_ENTRY_ID='3oSdR6c6azbdr4u3RhmUO'
 
 # kubectl create secret generic regcred --from-file=.dockerconfigjson=/home/mikh/.docker/config.json --type=kubernetes.io/dockerconfigjson
 
