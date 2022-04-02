@@ -97,7 +97,7 @@ jobs:
         uses: WyriHaximus/github-action-helm3@v2
         with:
           exec: |
-            helm upgrade --install flask-app ./deploy --values values.yaml \
+            helm upgrade --install flask-app ./deploy --values ./deploy/values.yaml \
               --set env.CONTENTFUL_ACEESS_TOKEN=${CONTENTFUL_ACEESS_TOKEN} \
               --set env.CONTENTFUL_SPACE_ID=${CONTENTFUL_SPACE_ID} \
               --set env.CONTENTFUL_ABOUT_ENTRY_ID=${CONTENTFUL_ABOUT_ENTRY_ID} \
