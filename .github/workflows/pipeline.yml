@@ -88,9 +88,7 @@ jobs:
           context: ./app
           file: ./Dockerfile
           push: ${{ github.ref == 'refs/heads/master' }}
-          tags: cr.yandex/crpgf4au6prfo3nhoduj/app/${APP}:latest
-        env:
-          APP: ${GITHUB_REPOSITORY#*/}
+          tags: cr.yandex/crpgf4au6prfo3nhoduj/app/flask-app:latest
   deploy:
     runs-on: ubuntu-latest
     needs: build_push
@@ -99,7 +97,7 @@ jobs:
         uses: WyriHaximus/github-action-helm3@v2
         with:
           exec: |
-            helm upgrade --install ${GITHUB_REPOSITORY#*/} ./deploy --values values.yaml \
+            helm upgrade --install flask-app ./deploy --values values.yaml \
               --set env.CONTENTFUL_ACEESS_TOKEN=${CONTENTFUL_ACEESS_TOKEN} \
               --set env.CONTENTFUL_SPACE_ID=${CONTENTFUL_SPACE_ID} \
               --set env.CONTENTFUL_ABOUT_ENTRY_ID=${CONTENTFUL_ABOUT_ENTRY_ID} \
@@ -112,7 +110,6 @@ jobs:
           CONTENTFUL_ABOUT_ENTRY_ID: ${{ secrets.CONTENTFUL_ABOUT_ENTRY_ID }}
           CONTENTFUL_TOOLS_ENTRY_ID: ${{ secrets.CONTENTFUL_TOOLS_ENTRY_ID }}
           CONTENTFUL_SITE_ENTRY_ID: ${{ secrets.CONTENTFUL_SITE_ENTRY_ID }}
-          APP: ${GITHUB_REPOSITORY#*/}
         # - name: Deploy to cluster
         #   uses: wahyd4/kubectl-helm-action@master
         #   env:
