@@ -93,6 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build_push
     steps:
+      - uses: actions/checkout@v2
       - name: Helm deploy
         uses: WyriHaximus/github-action-helm3@v2
         with:
@@ -110,9 +111,3 @@ jobs:
           CONTENTFUL_ABOUT_ENTRY_ID: ${{ secrets.CONTENTFUL_ABOUT_ENTRY_ID }}
           CONTENTFUL_TOOLS_ENTRY_ID: ${{ secrets.CONTENTFUL_TOOLS_ENTRY_ID }}
           CONTENTFUL_SITE_ENTRY_ID: ${{ secrets.CONTENTFUL_SITE_ENTRY_ID }}
-        # - name: Deploy to cluster
-        #   uses: wahyd4/kubectl-helm-action@master
-        #   env:
-        #     KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG }}
-        #   with:
-        #     args: kubectl apply -f manifest.yaml
