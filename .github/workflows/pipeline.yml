@@ -95,10 +95,9 @@ jobs:
     steps:
       - name: Helm deploy
         uses: WyriHaximus/github-action-helm3@v2
-        working-directory: deploy
         with:
           exec: |
-            helm upgrade --install ${GITHUB_REPOSITORY#*/} ./ --values values.yaml \
+            helm upgrade --install ${GITHUB_REPOSITORY#*/} ./deploy --values values.yaml \
               --set env.CONTENTFUL_ACEESS_TOKEN='E9Z4iHXLjkGgbT-2LzBHzyezd_ZQHlpo_skif_AO-U0' \
               --set env.CONTENTFUL_SPACE_ID='0jpfngygwvzp' \
               --set env.CONTENTFUL_ABOUT_ENTRY_ID='531Y8mG06XaBpzCcL0EyM' \
