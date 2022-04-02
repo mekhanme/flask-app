@@ -1,0 +1,75 @@
+replicaCount: 1
+
+image:
+  repository: cr.yandex/crpgf4au6prfo3nhoduj/app/flask-app
+  pullPolicy: Always
+  tag: latest
+
+imagePullSecrets:
+  - name: regcred
+
+nameOverride: flask-app
+fullnameOverride: flask-app
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: flask-app
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: NodePort
+  externalPort: 5000
+  internalPort: 5000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: rwxrwxrwx.dev
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+env:          
+  CONTENTFUL_SPACE_ID: ""
+  CONTENTFUL_ACEESS_TOKEN: ""
+  CONTENTFUL_ABOUT_ENTRY_ID: ""
+  CONTENTFUL_TOOLS_ENTRY_ID: ""
+  CONTENTFUL_SITE_ENTRY_ID: ""
+  APP_VERSION: ""
+
+# export CONTENTFUL_SPACE_ID='0jpfngygwvzp'
+# export CONTENTFUL_ACEESS_TOKEN='E9Z4iHXLjkGgbT-2LzBHzyezd_ZQHlpo_skif_AO-U0'
+# export CONTENTFUL_ABOUT_ENTRY_ID='531Y8mG06XaBpzCcL0EyM'
+# export CONTENTFUL_TOOLS_ENTRY_ID='1mBFglWDb1xbA1XucEqrDp'
+# export CONTENTFUL_SITE_ENTRY_ID='3oSdR6c6azbdr4u3RhmUO'
+
+# helm install flask-app-chart ./ --values values.yaml --set env.CONTENTFUL_SPACE_ID='0jpfngygwvzp' --set env.CONTENTFUL_ACEESS_TOKEN='E9Z4iHXLjkGgbT-2LzBHzyezd_ZQHlpo_skif_AO-U0' --set env.CONTENTFUL_ABOUT_ENTRY_ID='531Y8mG06XaBpzCcL0EyM' --set env.CONTENTFUL_TOOLS_ENTRY_ID='1mBFglWDb1xbA1XucEqrDp' --set env.CONTENTFUL_SITE_ENTRY_ID='3oSdR6c6azbdr4u3RhmUO'
+
+# kubectl create secret generic regcred --from-file=.dockerconfigjson=/home/mikh/.docker/config.json --type=kubernetes.io/dockerconfigjson
+
+# kubectl get configmap -n kube-system coredns -o yaml
+# kubectl apply -f coredns.yaml

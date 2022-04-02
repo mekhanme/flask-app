@@ -26,4 +26,6 @@ htmlcov/
 *,cover
 
 __pycache__
+logs.txt
 
+Dockerfile.test
