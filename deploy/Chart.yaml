@@ -1,5 +1,5 @@
 name: flask-app
 apiVersion: v2
 type: application
-version: 0.1.5
-appVersion: 0.1.5
+version: 0.1.6
+appVersion: 0.1.6
