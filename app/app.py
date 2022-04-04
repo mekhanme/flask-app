@@ -3,6 +3,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 from logging.config import dictConfig
 from flask_healthz import healthz
 from flask_healthz import HealthError
+import requests
 import contentful
 import time
 import os
@@ -34,6 +35,9 @@ metrics = PrometheusMetrics(app)
 app.register_blueprint(healthz, url_prefix="/healthz")
 metrics.info('app_info', 'Application info', version='1.0.3')
 
+def check_cdn():
+    requests.get('https://cdn.contentful.com')
+
 def printok():
     print("Everything is ok")
 
@@ -45,7 +49,7 @@ def liveness():
 
 def readiness():
     try:
-        printok()
+        check_cdn()
     except Exception:
         raise HealthError("Not ready")
 

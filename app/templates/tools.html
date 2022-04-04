@@ -1,4 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 <h1>{% block title %} Tools {% endblock %}</h1>
-{% set active_page = "tools" %} {% include 'sidebar.html' %} {{ content | safe }} 
-<div class="bottomright"> Your IP: <p-u class="underline">{{ ip }} </p-u></div> {% endblock %}
+{% set active_page = "tools" %} {% include 'sidebar.html' %}
+{{ content | safe }} 
+<div class="bottomright"> Your IP: <p-u class="underline">{{ ip }} </p-u></div>
+{% endblock %}

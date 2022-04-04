@@ -4,6 +4,19 @@
 }
 
 @font-face {
+    font-family: tt-commons;
+    src: url('../fonts/TT_Commons_Classic_Variable_Roman.woff');
+}
+
+@font-face {
+    font-family: tt-commons2;
+    src: url('../fonts/TT_Commons_Classic_Var_Roman.woff2') format('woff2-variations');
+    /* font-weight: 655;
+    font-stretch: 125%;
+    font-style: normal; */
+}
+
+@font-face {
     font-family: tt-rationalist;
     src: url('../fonts/TT_Rationalist_Variable_Roman.woff');
 }
@@ -16,20 +29,24 @@ h1 {
     font-family: tt-commons-outline;
     font-size: 80px;
     text-align: center;
-    line-height: 100px;
+    line-height: 50px;
     text-shadow: 0 0 10px #9c3da1, 0 0 20px #9c3da1, 0 0 30px #9c3da1, 0 0 40px #9c3da1;
-    padding: 30px;
+    padding-top: 0px;
     background-color: #251f33;
     color: #e4d9fa
 }
 
 h2 {
     font-family: tt-rationalist;
-    font-size: 50px;
+    font-size: 40px;
     text-align: left;
     padding-left: 250px;
     background-color: #251f33;
     color: #e4d9fa
+}
+
+h2.center {
+    text-align: center;
 }
 
 h3 {
@@ -38,9 +55,13 @@ h3 {
     text-align: left;
     padding-left: 250px;
     background-color: #251f33;
-    text-decoration: underline;
-    text-decoration-color: rgb(255, 90, 255);
     color: #e4d9fa
+}
+
+h3.center-underline {
+    text-align: center;
+    text-decoration: underline;
+    text-decoration-color: rgb(255, 90, 255)
 }
 
 h4 {
@@ -52,14 +73,21 @@ h4 {
     color: #e4d9fa
 }
 
-h4-c {
-    font-family: tt-rationalist;
-    font-size: 23px;
-    text-align: left;
-    background-color: #251f33;
+h4.underline {
+    padding-left: 10px;
     text-decoration: underline;
     text-decoration-color: rgb(255, 90, 255);
-    color: #e4d9fa
+}
+
+ul.list2 {
+    font-family: tt-commons;
+    padding-left: 300px;
+    text-indent: 20px;
+    font-size: 21px;
+}
+
+.list {
+    line-height: 40px;
 }
 
 div {
@@ -69,22 +97,22 @@ div {
     color: #e4d9fa
 }
 
-
-/* p:hover {
-    text-shadow: 0 0 10px #9c3da1, 0 0 20px #9c3da1, 0 0 30px #9c3da1, 0 0 40px #9c3da1;
-} */
+.twoColumn {
+    width: 49%;
+    float: left
+}
 
 p {
-    font-family: tt-rationalist;
-    font-weight: 100;
+    /* font-family: tt-rationalist; */
+    font-family: tt-commons;
+    text-indent: 20px;
+    font-size: 21px;
+    line-height: 25px;
     /* font-variation-settings: "wght" 800, "wdth" 85; */
-    /* font-style: italic; */
-    font-size: 20px;
-    font-stretch: 1%;
-    font-optical-sizing: auto;
+    /* font-weight: 100; */
+    /* font-stretch: 1%; */
+    /* font-optical-sizing: auto; */
     padding-left: 250px;
-    /* text-decoration: underline;
-    text-decoration-color: rgb(255, 90, 255); */
     color: #e4d9fa
 }
 
@@ -97,12 +125,17 @@ p-c {
     color: #e4d9fa
 }
 
+p.center-small {
+    font-size: 15px;
+    text-align: center
+}
+
 a {
     color: rgb(255, 90, 255);
 }
 
 a-p {
-    padding-left: 250px;
+    /* padding-left: 250px; */
     color: rgb(255, 90, 255)
 }
 
@@ -146,6 +179,16 @@ p.wide {
 } */
 
 .sidenav {
+    font-family: tt-commons;
+    font-weight: 125 950;
+    font-stretch: 75% 125%;
+    font-style: oblique 0deg 12deg;
+    font-size: 3.5vw;
+    /* font-variation-settings: "wght" 625, "wdth" 100 'GRAD' 18; */
+    /* font-weight: 225;
+    font-stretch: 55%;
+    font-size: 164px;
+    font-optical-sizing: none; */
     height: 100%;
     width: 200px;
     position: fixed;
@@ -155,6 +198,7 @@ p.wide {
     background-color: #251f33;
     overflow-x: hidden;
     padding-top: 200px;
+    line-height: 50px
 }
 
 .sidenav a {
@@ -184,14 +228,25 @@ a.button:hover {
     text-shadow: 0 0 10px #9c3da1, 0 0 20px #9c3da1, 0 0 30px #9c3da1, 0 0 40px #9c3da1
 }
 
-.twoColumn {
-    width: 49%;
-    float: left
+img {
+    max-width: 40%;
+    padding-left: 250px;
 }
 
-img {
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+img.text {
     max-width: 80%;
-    padding-left: 300px;
+    padding-left: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* width: 80%; */
 }
 
 .bottom {
