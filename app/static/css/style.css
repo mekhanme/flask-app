@@ -9,14 +9,6 @@
 }
 
 @font-face {
-    font-family: tt-commons2;
-    src: url('../fonts/TT_Commons_Classic_Var_Roman.woff2') format('woff2-variations');
-    /* font-weight: 655;
-    font-stretch: 125%;
-    font-style: normal; */
-}
-
-@font-face {
     font-family: tt-rationalist;
     src: url('../fonts/TT_Rationalist_Variable_Roman.woff');
 }
